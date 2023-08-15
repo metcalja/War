@@ -45,21 +45,12 @@ public class Player {
         }
         return hand;
     }
+    //used to add cards to hand
     public void addToHand(Card card) {
         hand.addCard(card);
     }
+    //used to put cards of winner to the back of their hand
     public void moveBackOfHand(Card card) {
         hand.getCards().add(hand.getHandSize()-1, card);
     }
-    //method used to add the cards won to the winners pile
-//    public void addToWinnings(Card card) {
-//        pile.addCard(card);
-//    }
-    //method used to show players winnings, (if their pile is empty it makes one)
-//    public WinningsPile getWinnings() {
-//        if (pile == null) {
-//            pile = new WinningsPile(); // Initialize the hand if it's null
-//        }
-//        return pile;
-//    }
 }
