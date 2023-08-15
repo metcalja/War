@@ -25,77 +25,108 @@ public class War {
         
         if (comparison == 1) {
             //p1 wins
-            playerOne.addToWinnings(playerOneCard);
-            playerOne.addToWinnings(playerTwoCard);
-            playerOne.addPoint(2);
-            System.out.println(playerOne.getName() + ", won this flip.");
+            //have to remove p1 card, so it can be moved
             playerOne.getHand().removeCard(playerOneCard);
+            System.out.println(playerOne.getName() + ", won this flip.");
+            //remove p2 card
+            //add winnings to p1 hand
+            playerOne.addToHand(playerTwoCard);
             playerTwo.getHand().removeCard(playerTwoCard);
+            playerOne.moveBackOfHand(playerOneCard);
             
         } else if (comparison == 0) {
             //p2 won flip
-            playerTwo.addToWinnings(playerOneCard);
-            playerTwo.addToWinnings(playerTwoCard);
-            playerTwo.addPoint(2);
-            System.out.println(playerTwo.getName() + ", won this flip.");
-            playerOne.getHand().removeCard(playerOneCard);
+            //have to remove p2 card, so it can be moved
             playerTwo.getHand().removeCard(playerTwoCard);
             
+            System.out.println(playerTwo.getName() + ", won this flip.");
+            //remove p1 card
+            //add winnings to p2 hand
+            playerTwo.addToHand(playerOneCard);
+            playerOne.getHand().removeCard(playerOneCard);   
+            playerTwo.moveBackOfHand(playerTwoCard);
         } else {
-            //TIE
-            System.out.println("Tie breaker...");
-            Card playerOneCardTwo = playerOne.getHand().getCards().get(1);
-            Card playerTwoCardTwo = playerTwo.getHand().getCards().get(1);
+            int firstCard = 1;
+            //first hidden card
+            Card playerOneSecondCard = playerOne.getHand().getCards().get(firstCard);
+            Card playerTwoSecondCard = playerTwo.getHand().getCards().get(firstCard);
 
-            
+            int secondCard = 2;
+            //flipped card after
+            Card playerOneThirdCard = playerOne.getHand().getCards().get(secondCard);
+            Card playerTwoThirdCard = playerTwo.getHand().getCards().get(secondCard);
+            //TIE
+            System.out.println("WAR!!!!!");
             System.out.println(playerOne.getName() + "'s card is a: " + 
-                playerOneCardTwo);
+                playerOneThirdCard);
             System.out.println(playerTwo.getName() + "'s card is a: " + 
-                playerTwoCardTwo);
-            
-            int tieBreakComparison = compareCards(playerOneCardTwo,
-                playerTwoCardTwo);
-        
-        if (tieBreakComparison == 0) {
-            // Player Two wins the tie-breaker
-            playerTwo.addToWinnings(playerOneCard);
-            playerTwo.addToWinnings(playerTwoCard);
-            playerTwo.addToWinnings(playerOneCardTwo);
-            playerTwo.addToWinnings(playerTwoCardTwo);
-            playerTwo.addPoint(4);
-            System.out.println(playerTwo.getName() + ", won this flip.");
-            playerOne.getHand().removeCard(playerOneCard);
-            playerOne.getHand().removeCard(playerOneCardTwo);
-            playerTwo.getHand().removeCard(playerTwoCard);
-            playerTwo.getHand().removeCard(playerTwoCardTwo);
-            
-        } else if (tieBreakComparison == 1) {
-            // Player One wins the tie-breaker
-            playerOne.addToWinnings(playerOneCard);
-            playerOne.addToWinnings(playerTwoCard);
-            playerOne.addToWinnings(playerOneCardTwo);
-            playerOne.addToWinnings(playerTwoCardTwo);
-            playerOne.addPoint(4);
-            System.out.println(playerOne.getName() + ", won this flip.");
-            playerOne.getHand().removeCard(playerOneCard);
-            playerOne.getHand().removeCard(playerOneCardTwo);
-            playerTwo.getHand().removeCard(playerTwoCard);
-            playerTwo.getHand().removeCard(playerTwoCardTwo);
-        } else {
-            System.out.println("Tie even after tie breaker, no points.");
+                playerTwoThirdCard);
+
+            int tieBreakComparison = compareCards(playerOneThirdCard,
+                playerTwoThirdCard);
+            do {
+                
+
+                if (tieBreakComparison == 0) {
+                    // Player Two wins the tie-breaker
+                    //add p1 cards to player two's hand
+                    
+                    playerTwo.addToHand(playerOneCard);
+                    playerTwo.addToHand(playerOneSecondCard);  
+                    playerTwo.addToHand(playerOneThirdCard);
+                    
+                    System.out.println(playerTwo.getName() + ", won this flip.");
+                    //remove losers card from their hand
+                    playerOne.getHand().removeCard(playerOneCard);
+                    playerOne.getHand().removeCard(playerOneSecondCard);
+                    playerOne.getHand().removeCard(playerOneThirdCard);
+                    
+                    //remove winners cards so they can be moved
+                    playerTwo.getHand().removeCard(playerTwoCard);
+                    playerTwo.getHand().removeCard(playerTwoSecondCard);
+                    playerTwo.getHand().removeCard(playerTwoThirdCard);
+                    //move winners cards to back of hand
+                    playerTwo.moveBackOfHand(playerTwoCard);
+                    playerTwo.moveBackOfHand(playerTwoSecondCard);
+                    playerTwo.moveBackOfHand(playerTwoThirdCard);
+                    
+                } else if (tieBreakComparison == 1) {
+                    //player one wins
+                    //add p2 cards to player one's hand
+                    playerOne.addToHand(playerTwoCard);
+                    playerOne.addToHand(playerTwoSecondCard);
+                    playerOne.addToHand(playerTwoThirdCard);
+                    
+                    System.out.println(playerOne.getName() + ", won this flip.");
+                    //remove losers card from their hand
+                    playerTwo.getHand().removeCard(playerTwoCard);
+                    playerTwo.getHand().removeCard(playerTwoSecondCard);
+                    playerTwo.getHand().removeCard(playerTwoThirdCard);
+                    //remove winners cards so they can be moved
+                    playerOne.getHand().removeCard(playerOneCard);
+                    playerOne.getHand().removeCard(playerOneSecondCard);
+                    playerOne.getHand().removeCard(playerOneThirdCard);
+                    //move winners cards to back of hand
+                    playerOne.moveBackOfHand(playerOneCard);
+                    playerOne.moveBackOfHand(playerOneSecondCard);
+                    playerOne.moveBackOfHand(playerTwoThirdCard);
+                }
+            } while(playerOneThirdCard.getValue().
+                    equals(playerTwoThirdCard.getValue()));
+            firstCard++;
+            secondCard++;
         }
-    }
-        System.out.println(playerOne.getName() + "'s score: " + playerOne.
-                getScore() + " | " + playerTwo.getName() + "'s score: " + 
+            
+        System.out.println(playerOne.getName() + "'s card count: " + playerOne.
+                getScore() + " | " + playerTwo.getName() + "'s card count: " + 
                     playerTwo.getScore());
+        System.out.println();
         
         
     }
     
     public int compareCards(Card cardOne, Card cardTwo) {
-        System.out.println("Comparing " + cardOne + " (" + cardOne.getValue().
-                ordinal() + ") with " + cardTwo + " (" + cardTwo.getValue()
-                        .ordinal() + ")");
+        System.out.println("Comparing " + cardOne + ", with " + cardTwo);
 
         if (cardOne.getValue().ordinal() > cardTwo.getValue().ordinal()) {
             return 1; // 1 is player one

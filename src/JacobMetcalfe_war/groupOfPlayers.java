@@ -6,7 +6,7 @@ import java.util.Random;
  *
  * @author yacob
  */
-public class groupOfPlayers {
+public class groupOfPlayers extends Player {
     public enum Opponents {
         BOBBY,
         JOHN,
