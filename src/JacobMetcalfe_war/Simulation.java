@@ -14,7 +14,7 @@ public class Simulation {
         Deck deck = new Deck();
         War gameOfWar = new War();
 
-        groupOfPlayers players = new groupOfPlayers();
+        GroupOfPlayers players = new GroupOfPlayers();
         Scanner input = new Scanner(System.in);
         
         System.out.println(gameOfWar.introMessage());

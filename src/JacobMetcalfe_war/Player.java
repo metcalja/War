@@ -49,7 +49,7 @@ public class Player {
     public void addToHand(Card card) {
         hand.addCard(card);
     }
-    //used to put cards of winner to the back of their hand
+    //used to put cards of winner to the back of their handS
     public void moveBackOfHand(Card card) {
         hand.getCards().add(hand.getHandSize()-1, card);
     }
